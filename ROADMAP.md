@@ -1,5 +1,19 @@
 # Roadmap — WMK Architecture Studio
 
+## Status do importador experimental — v0.2
+
+- [x] Importar JPG/PNG e rasterizar **primeira página** PDF via PDFium.
+- [x] Reconhecer segmentos candidatos por saturação de cor/limiares e Hough; selecionar modo automático, laranja ou escuro.
+- [x] Revisão visual: ativar/desativar segmentos e adicionar manualmente linhas que faltaram.
+- [x] Calibrar escala em milímetros por pixel usando dois pontos e medida conhecida, com conferência humana.
+- [x] Exportar DXF editável, JSON de auditoria e prévia PNG preservando o original.
+- [x] Disponibilizar código e logo WMK na pasta [importador/](importador/).
+- [x] Adicionar testes automatizados do detector: 6 cenários locais aprovados em 17/11/2026.
+- [ ] Confirmar compilação Windows e funcionamento do EXE na máquina do usuário; [GitHub Actions](../../actions).
+- [ ] Integrar anexação de raster **dentro da área de desenho do WMK CAD Studio**. No momento o importador é um aplicativo auxiliar.
+- [ ] Calcular cotas automaticamente com OCR de forma confiável, com limites de confiança.
+- [ ] Criar entidades de parede BIM com posição e escala verificadas, incluindo portas/janelas.
+
 ## Base da priorização
 
 [Pesquisa de necessidades de arquitetos (16/11/2026)](pesquisa/necessidades-arquitetos-2026.md) reúne evidências, limitações, requisitos por ferramenta, casos de uso e critérios de aceite. **A pesquisa não representa entrevistas com arquitetos e não comprova maturidade profissional dos forks.**
