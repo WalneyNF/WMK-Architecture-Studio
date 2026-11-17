@@ -1,5 +1,41 @@
 # Roadmap — WMK Architecture Studio
 
+## Base da priorização
+
+[Pesquisa de necessidades de arquitetos (16/11/2026)](pesquisa/necessidades-arquitetos-2026.md) reúne evidências, limitações, requisitos por ferramenta, casos de uso e critérios de aceite. **A pesquisa não representa entrevistas com arquitetos e não comprova maturidade profissional dos forks.**
+
+### Entregas orientadas a necessidades reais
+
+**P0 — provar que a integração tem valor**
+- [ ] Validar que o WMK CAD Studio abre, altera, salva e reabre um DXF de planta **sem perder as entidades utilizadas**.
+- [ ] Validar no WMK BIM Studio a criação de quatro paredes a partir do DXF de exemplo.
+- [ ] Exibir **relatório de importação**: entidades recebidas, convertidas, ignoradas e erros.
+- [ ] Testar unidade de desenho e impedir importação com escala/unidade indefinida.
+
+**P1 — dar suporte ao projeto arquitetônico básico**
+- [ ] Converter polilinhas CAD em eixos/contornos de paredes com conferência do usuário.
+- [ ] Criar portas, janelas e pisos/ambientes associados às paredes.
+- [ ] Fazer casos de teste de cotas, áreas e documentação em PDF.
+- [ ] Adicionar tutorial guiado em português, com modos iniciante e avançado.
+- [ ] Implantar testes de ida e volta de DXF/IFC com relatório de perda de dados.
+
+**P2 — reduzir retrabalho e coordenar revisões**
+- [ ] Comparar duas versões da planta e sinalizar alterações de geometria e medidas.
+- [ ] Introduzir IDs de origem estáveis e correspondência CAD ↔ BIM.
+- [ ] Examinar suporte a BCF e IDS conforme buildingSMART.
+- [ ] Pesquisar bibliotecas de símbolos/objetos BIM, especificações e quantitativos.
+
+**P3 — reconhecer plantas raster com IA**
+- [ ] Pipeline OCR para cotas e nomes de cômodos com confiança/posição.
+- [ ] Reconhecedor de paredes treinado para plantas técnicas e humanizadas.
+- [ ] Prévia editável e relatório das dimensões inferidas/não conhecidas.
+- [ ] Testes com amostras autorizadas e medidas de precisão/recall.
+
+**Validação de mercado (ainda pendente)**
+- [ ] Entrevistar 5–10 arquitetos, incluindo autônomos e pequenos escritórios.
+- [ ] Obter, com permissão, projetos reais DXF/DWG/IFC e plantas escaneadas.
+- [ ] Validar requisitos brasileiros, práticas de entrega e padrões de pranchas com profissional habilitado.
+
 ## Marco 0 — Fundação do integrador
 - [x] Criar repositório independente, sem copiar os dois motores.
 - [x] Documentar a finalidade dos forks CAD e BIM.
