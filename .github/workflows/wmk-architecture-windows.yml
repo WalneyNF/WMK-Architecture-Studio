@@ -1,0 +1,55 @@
+name: WMK Architecture Studio - Windows
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'importador/**'
+      - '.github/workflows/wmk-architecture-windows.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: wmk-architecture-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  windows-importador:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - name: Obter repositorio
+        uses: actions/checkout@v4
+      - name: Instalar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Instalar bibliotecas e empacotador
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r importador/requirements.txt 'pyinstaller>=6.10,<7'
+      - name: Testar importador
+        run: python -m unittest discover -s importador/tests -v
+      - name: Criar EXE portatil com logo WMK
+        shell: pwsh
+        run: |
+          pyinstaller --noconfirm --clean --windowed --onefile --name WMK-Architecture-Studio --icon importador/assets/wmk-architecture.ico --add-data 'importador/assets/logo-wmk-architecture-64.png;assets' --collect-all pypdfium2_raw importador/wmk_architecture_studio.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          if (-not (Test-Path 'dist/WMK-Architecture-Studio.exe')) { throw 'EXE nao encontrado' }
+      - name: Montar ZIP para estudos
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path pacote | Out-Null
+          Copy-Item 'dist/WMK-Architecture-Studio.exe' pacote/
+          Copy-Item 'importador/README.md','importador/LEIA-ME.txt','importador/versao.json' pacote/
+          Copy-Item 'assets/logo-wmk-architecture.webp' pacote/
+          Compress-Archive -Path pacote/* -DestinationPath WMK-Architecture-Studio-Windows-Portable.zip -Force
+      - name: Disponibilizar pacote Windows
+        uses: actions/upload-artifact@v4
+        with:
+          name: WMK-Architecture-Studio-Windows-Portable
+          path: WMK-Architecture-Studio-Windows-Portable.zip
+          retention-days: 30
