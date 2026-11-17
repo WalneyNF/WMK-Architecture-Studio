@@ -9,6 +9,26 @@ Este repositório **não é um terceiro clone dos editores**. Ele integra, em et
 - [WMK CAD Studio](https://github.com/WalneyNF/WMK-CAD-Studio): desenho técnico 2D, camadas, cotas, DXF/DWG.
 - [WMK BIM Studio](https://github.com/WalneyNF/WMK-BIM-STUDIO): paredes, portas, janelas, pisos, telhados, modelos BIM e comandos `wall`.
 
+## Por que integrar CAD, BIM e IA?
+
+Um projeto arquitetônico passa por **desenhos técnicos, modelagem de elementos da construção, documentação e revisões**. Se cada aplicativo trabalha isoladamente, o profissional pode acabar repetindo paredes e cotas, perdendo informações em conversões e corrigindo arquivos manualmente.
+
+- **CAD Studio:** produz geometria 2D precisa, camadas, cotas, blocos e DXF/DWG.
+- **BIM Studio:** representa paredes, portas, janelas, pisos, telhados e demais elementos construtivos com propriedades.
+- **Architecture Studio:** cria e valida a **ponte** entre as representações, controla unidades, registra o que foi convertido, exige revisão e futuramente integra OCR/IA para plantas rasterizadas.
+
+**O terceiro programa não substitui os outros dois nem integra as interfaces ainda**. Seu papel inicial é converter e validar dados, preservando a independência dos motores.
+
+### Pesquisa sobre as necessidades dos arquitetos
+
+A revisão de fontes profissionais e acadêmicas de 2024–2026 identificou como temas prioritários: **precisão e interoperabilidade, redução de retrabalho, documentação, treinamento, custos e automação confiável**.
+
+Confira a [pesquisa detalhada com evidências, tabela de necessidades por projeto, critérios de aceite e referências](pesquisa/necessidades-arquitetos-2026.md).
+
+**Principais evidências:** o [CAU/BR](https://caubr.gov.br/pesquisa-bim-para-65-dos-profissionais-entidades-sao-referencia-em-inovacao/) divulgou grande demanda por capacitação tecnológica; a [AIA](https://www.aia.org/about-aia/press/new-aia-firm-survey-report-reveals-trends-shaping-business-architecture) documentou adoção crescente de IA nos escritórios dos EUA; e a [buildingSMART](https://www.buildingsmart.org/about/OpenBIM/) explica os padrões IFC, BCF e IDS para interoperabilidade.
+
+**Esses resultados não substituem testes nem entrevistas com arquitetos brasileiros.** As funcionalidades propostas permanecem um backlog a validar.
+
 ## O que funciona neste primeiro experimento
 
 O arquivo `bridge/dxf_para_bim.py` (a ser mantido neste repositório) recebe um **DXF ASCII de teste** contendo linhas na camada **WMK_PAREDES** e gera um script de paredes que poderá ser executado no WMK BIM Studio. O conversor utiliza **apenas a biblioteca padrão do Python**, sem servidor e sem API de IA.
