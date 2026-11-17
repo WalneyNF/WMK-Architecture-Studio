@@ -18,6 +18,16 @@ Transforma plantas **JPG, PNG e primeira página PDF** em sugestões de segmento
 8. Clique em **3. Salvar DXF revisado**. Serão gerados `.dxf` (linhas editáveis), `.json` (origem e decisões) e `_previa.png`.
 9. No **WMK CAD Studio**, abra o `.dxf` e confirme as linhas. A imagem JPG/PNG **não é embutida no CAD** por este exportador; a anexação de raster dentro do aplicativo CAD permanece pendente.
 
+## Próximo passo opcional: testar no BIM Studio
+
+Depois de **calibrar a escala** e conferir o DXF no WMK CAD Studio, você pode converter as linhas selecionadas em um script de paredes de teste usando a ponte deste repositório:
+
+```powershell
+py -3 ..\bridge\dxf_para_bim.py "projetos_gerados\planta\planta.dxf" "paredes.wmk.txt" --camada WMK_PAREDES_REVISADAS --unidade mm
+```
+
+A ponte bloqueia DXF sem unidade calibrada; confirme o script com a ferramenta **Testar** do WMK BIM Studio. A largura e altura das paredes ainda são hipóteses de modelagem.
+
 ## Como ler as três amostras
 
 - **Planta 01:** paredes laranja; o filtro dá preferência a laranja **saturado e claro**, para evitar mesas de madeira.
