@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+.pytest_cache/
+projetos_gerados/
+*.spec
+build/
+dist/
