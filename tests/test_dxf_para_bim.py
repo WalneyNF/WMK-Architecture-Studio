@@ -32,6 +32,77 @@ class TestPonte(unittest.TestCase):
         with self.assertRaises(bridge.ErroConversao):
             bridge.converter(self.sample + "\n10", unidade="mm")
 
+    def test_importador_revisado_calibrado_em_mm(self):
+        dx = """0
+SECTION
+2
+HEADER
+9
+$INSUNITS
+70
+4
+0
+ENDSEC
+0
+SECTION
+2
+ENTITIES
+0
+LINE
+8
+WMK_PAREDES_REVISADAS
+10
+100
+20
+200
+11
+4100
+21
+200
+0
+ENDSEC
+0
+EOF
+"""
+        texto = bridge.converter(dx, camada="WMK_PAREDES_REVISADAS", unidade="mm")
+        self.assertEqual(texto.count("wall "), 1)
+        self.assertIn("[4100, 200]", texto)
+
+    def test_importador_sem_escala_nao_cria_paredes_bim(self):
+        dx = """0
+SECTION
+2
+HEADER
+9
+$INSUNITS
+70
+0
+0
+ENDSEC
+0
+SECTION
+2
+ENTITIES
+0
+LINE
+8
+WMK_PAREDES_REVISADAS
+10
+100
+20
+200
+11
+4100
+21
+200
+0
+ENDSEC
+0
+EOF
+"""
+        with self.assertRaisesRegex(bridge.ErroConversao, "escala"):
+            bridge.converter(dx, camada="WMK_PAREDES_REVISADAS", unidade="mm")
+
     def test_zero_comprimento_ignorado(self):
         data = """0
 SECTION
