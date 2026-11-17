@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/logo-wmk-architecture.webp" alt="Logo WMK Architecture Studio" width="320"></p>
+
 # WMK Architecture Studio
 
 **Integração experimental CAD ↔ BIM para Windows, em português.**
@@ -28,6 +30,27 @@ Confira a [pesquisa detalhada com evidências, tabela de necessidades por projet
 **Principais evidências:** o [CAU/BR](https://caubr.gov.br/pesquisa-bim-para-65-dos-profissionais-entidades-sao-referencia-em-inovacao/) divulgou grande demanda por capacitação tecnológica; a [AIA](https://www.aia.org/about-aia/press/new-aia-firm-survey-report-reveals-trends-shaping-business-architecture) documentou adoção crescente de IA nos escritórios dos EUA; e a [buildingSMART](https://www.buildingsmart.org/about/OpenBIM/) explica os padrões IFC, BCF e IDS para interoperabilidade.
 
 **Esses resultados não substituem testes nem entrevistas com arquitetos brasileiros.** As funcionalidades propostas permanecem um backlog a validar.
+
+## Importador de plantas v0.2 — já disponível no repositório
+
+O módulo experimental **[importador/](importador/)** permite trabalhar com imagens **JPG/PNG** e com a **primeira página de PDFs**. Ele gera segmentos candidatos por OpenCV e exporta **DXF editável** após revisão humana.
+
+- **Identidade WMK:** título, tela e ícone personalizados, arquivos de aplicação `wmk_architecture_studio.py` e `wmk_detector_planta.py`.
+- **Reconhecimento:** detecção adaptativa de paredes laranja ou linhas escuras, com OCR opcional instalado separadamente.
+- **Revisão:** linhas verdes ativas, clique para descartar em vermelho ou recuperar, opção de adicionar segmento manual.
+- **Escala:** opção de calibrar com dois pontos e uma distância real conhecida em metros. Sem isso, unidade do DXF fica indefinida.
+- **Saída:** DXF das linhas ativas, JSON com resultados e imagem de prévia; sem transformar o desenho automaticamente em uma construção validada.
+
+### Primeiro teste no Windows
+
+```powershell
+cd importador
+.\iniciar-windows.bat
+```
+
+Requer Python 3.11+ e instala as bibliotecas Python num ambiente virtual. Consulte o [manual do importador](importador/README.md), seus [seis testes](importador/tests/test_detector.py) e a [compilação Windows experimental](../../actions).
+
+**Limite importante:** o importador é uma aplicação de apoio dentro do repositório Architecture Studio; **não está embutido na interface do WMK CAD Studio**. Você gera DXF no importador e abre no CAD. Ele tampouco reconhece todas as paredes/portas automaticamente ou gera BIM 3D pronto.
 
 ## O que funciona neste primeiro experimento
 
