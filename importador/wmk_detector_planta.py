@@ -20,16 +20,21 @@ def carregar_imagem(path: str | Path) -> np.ndarray:
     if not path.exists():
         raise FileNotFoundError(f"Arquivo inexistente: {path}")
     if path.suffix.lower() == '.pdf':
+        # PDFium permite redistribuição com licenças permissivas; apenas página 1.
         try:
-            import fitz
+            import pypdfium2 as pdfium
         except ImportError as exc:
-            raise RuntimeError("PDF requer PyMuPDF: pip install pymupdf") from exc
-        doc = fitz.open(str(path))
+            raise RuntimeError('PDF requer pypdfium2: pip install pypdfium2') from exc
+        doc = pdfium.PdfDocument(str(path))
         if not len(doc):
+            doc.close()
             raise ValueError('PDF vazio')
-        pix = doc[0].get_pixmap(matrix=fitz.Matrix(2, 2), alpha=False)
-        raw = np.frombuffer(pix.samples, np.uint8).reshape(pix.height, pix.width, pix.n)
-        return cv2.cvtColor(raw, cv2.COLOR_RGB2BGR)
+        page = doc[0]
+        bitmap = page.render(scale=2)
+        rgb = np.asarray(bitmap.to_pil().convert('RGB'))
+        page.close()
+        doc.close()
+        return cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR)
     raw = np.fromfile(str(path), np.uint8)
     image = cv2.imdecode(raw, cv2.IMREAD_COLOR)
     if image is None:
