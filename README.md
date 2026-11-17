@@ -41,6 +41,16 @@ O módulo experimental **[importador/](importador/)** permite trabalhar com imag
 - **Escala:** opção de calibrar com dois pontos e uma distância real conhecida em metros. Sem isso, unidade do DXF fica indefinida.
 - **Saída:** DXF das linhas ativas, JSON com resultados e imagem de prévia; sem transformar o desenho automaticamente em uma construção validada.
 
+### Como passar um DXF revisado para o BIM (experimento com escala confirmada)
+
+O importador salva as linhas ativas na camada `WMK_PAREDES_REVISADAS`. **Antes do BIM, calibre a planta por uma medida real e confira o DXF no CAD.** Então, no diretório-raiz do Architecture Studio:
+
+```powershell
+py -3 bridge\dxf_para_bim.py "importador\projetos_gerados\planta\planta.dxf" "paredes-para-bim.txt" --camada WMK_PAREDES_REVISADAS --unidade mm
+```
+
+Substitua `planta` pelo nome da imagem importada. O conversor **recusa DXF do importador com unidade indefinida**. O resultado continua sendo apenas um **script de paredes candidatas de 100 mm para conferência**, não um projeto arquitetônico homologado. No WMK BIM Studio, teste primeiro o script num projeto de ensaio.
+
 ### Primeiro teste no Windows
 
 ```powershell
