@@ -1,0 +1,27 @@
+name: Verificar ponte CAD para BIM
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  testes:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Testes da ponte DXF
+        run: python -m unittest discover -s tests -v
+      - name: Converter DXF de exemplo
+        shell: pwsh
+        run: |
+          python bridge/dxf_para_bim.py exemplos/quarto.dxf paredes.wmk.txt --unidade mm
+          if (-not (Test-Path paredes.wmk.txt)) { throw "Script nao gerado" }
+          $linhas = @(Get-Content paredes.wmk.txt | Where-Object { $_ -match '^wall ' })
+          if ($linhas.Count -ne 4) { throw "Esperadas 4 paredes, obtidas $($linhas.Count)" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: primeiro-script-bim
+          path: paredes.wmk.txt
