@@ -27,6 +27,26 @@ def pares_dxf(conteudo: str):
         yield codigo, linhas[i + 1].strip()
 
 
+def unidade_dxf(conteudo: str) -> int | None:
+    """Extrai INSUNITS da secao HEADER; None quando nao encontrado."""
+    pares = list(pares_dxf(conteudo))
+    secao = ""
+    for i, (codigo, valor) in enumerate(pares):
+        if codigo == 0 and valor.upper() == "SECTION":
+            secao = ""
+        elif codigo == 2 and secao == "":
+            secao = valor.upper()
+        elif codigo == 0 and valor.upper() == "ENDSEC":
+            secao = ""
+        elif secao == "HEADER" and codigo == 9 and valor.upper() == "$INSUNITS":
+            if i + 1 < len(pares) and pares[i + 1][0] == 70:
+                try:
+                    return int(pares[i + 1][1])
+                except ValueError as exc:
+                    raise ErroConversao("INSUNITS invalido.") from exc
+    return None
+
+
 def extrair_linhas(conteudo: str, camada: str) -> list[tuple[float, float, float, float]]:
     pares = list(pares_dxf(conteudo))
     secao = ""
@@ -84,6 +104,15 @@ def converter(texto: str, camada: str = "WMK_PAREDES", unidade: str = "mm") -> s
     fator = {"mm": 1, "m": 1000}.get(unidade)
     if fator is None:
         raise ErroConversao("Unidade deve ser mm ou m.")
+    # Linhas geradas pelo importador WMK precisam ter escala explicitamente
+    # calibrada, pois caso contrario suas coordenadas sao pixels sem unidade.
+    if camada.upper() == "WMK_PAREDES_REVISADAS":
+        insunits = unidade_dxf(texto)
+        if insunits != 4 or unidade != "mm":
+            raise ErroConversao(
+                "DXF do importador sem escala valida em milimetros. "
+                "Use Calibrar escala (2 pontos + medida real) antes de enviar ao BIM."
+            )
     segmentos = extrair_linhas(texto, camada)
     if not segmentos:
         raise ErroConversao(f"Nenhuma LINE encontrada na camada {camada!r}.")
