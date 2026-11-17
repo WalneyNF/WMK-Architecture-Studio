@@ -1,0 +1,1 @@
+{"produto":"WMK Architecture Studio - Importador de plantas","versao":"0.2.0-experimental","autor":"Walney Moreira Klein","contato":"walneyk@hotmail.com","formatos_entrada":[".png",".jpg",".jpeg",".bmp",".pdf"],"formatos_saida":[".dxf",".json",".png"],"imagem_pdf":"primeira pagina","escala_automatica":false,"bim_automatico":false,"revisao_interativa":true}
