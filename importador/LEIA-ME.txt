@@ -1,0 +1,20 @@
+WMK ARCHITECTURE STUDIO — IMPORTADOR INTELIGENTE (EXPERIMENTAL v0.2)
+Walney Moreira Klein — walneyk@hotmail.com
+
+1) Dê dois cliques em iniciar-windows.bat (Python 3.11+ requerido).
+2) Clique em Abrir JPG / PNG / PDF e escolha uma planta.
+3) Clique em 1. Reconhecer linhas; aguarde.
+4) Clique nas linhas verdes ERRADAS para ficarem vermelhas (excluídas).
+   Clique novamente nas vermelhas se quiser recuperá-las.
+5) Use Adicionar linha para completar segmentos que faltam: clique em 2 pontos.
+6) Se souber uma medida verdadeira, use Calibrar escala, clique em 2 pontos
+   extremos de uma cota e digite a distância real em METROS.
+7) Clique em 3. Salvar DXF revisado: DXF + JSON + prévia PNG na pasta projetos_gerados.
+
+Atenção: só segmentos ATIVOS são gravados no DXF; a imagem original é
+preservada, não embutida no CAD (suporte de raster no WMK CAD ainda pendente).
+Sem calibrar, o DXF fica sem unidade real, deliberadamente.
+Mesmo com calibração, o usuário deve validar a exatidão do desenho.
+PDF: apenas a primeira página rasterizada nesta versão.
+OCR: opcional, caso Tesseract esteja instalado; não atribui medidas automaticamente.
+Não afirma gerar BIM, portas, janelas ou plantas profissionais completas.
