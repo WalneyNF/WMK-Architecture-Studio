@@ -31,6 +31,10 @@ Confira a [pesquisa detalhada com evidências, tabela de necessidades por projet
 
 **Esses resultados não substituem testes nem entrevistas com arquitetos brasileiros.** As funcionalidades propostas permanecem um backlog a validar.
 
+## Download para Windows
+
+**[Baixar EXE Portable — Releases públicos WMK Architecture Studio](https://github.com/WalneyNF/WMK-Architecture-Studio/releases)**. O pacote Windows contém o executável `WMK-Architecture-Studio.exe` e arquivos de orientação. É uma **versão de testes**, sem assinatura digital. O programa não é uma ferramenta de projeto arquitetônico certificado.
+
 ## Importador de plantas v0.2 — já disponível no repositório
 
 O módulo experimental **[importador/](importador/)** permite trabalhar com imagens **JPG/PNG** e com a **primeira página de PDFs**. Ele gera segmentos candidatos por OpenCV e exporta **DXF editável** após revisão humana.
