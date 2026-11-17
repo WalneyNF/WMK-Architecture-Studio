@@ -9,7 +9,7 @@ on:
       - '.github/workflows/wmk-architecture-windows.yml'
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: wmk-architecture-${{ github.ref }}
@@ -45,6 +45,7 @@ jobs:
           New-Item -ItemType Directory -Force -Path pacote | Out-Null
           Copy-Item 'dist/WMK-Architecture-Studio.exe' pacote/
           Copy-Item 'importador/README.md','importador/LEIA-ME.txt','importador/versao.json' pacote/
+          Copy-Item 'LICENSE','THIRD_PARTY_NOTICES.md' pacote/
           Copy-Item 'assets/logo-wmk-architecture.webp' pacote/
           Compress-Archive -Path pacote/* -DestinationPath WMK-Architecture-Studio-Windows-Portable.zip -Force
       - name: Disponibilizar pacote Windows
@@ -53,3 +54,17 @@ jobs:
           name: WMK-Architecture-Studio-Windows-Portable
           path: WMK-Architecture-Studio-Windows-Portable.zip
           retention-days: 30
+      - name: Publicar release WMK de testes
+        if: github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: wmk-architecture-teste-${{ github.run_number }}
+          name: WMK Architecture Studio - Teste ${{ github.run_number }}
+          prerelease: true
+          generate_release_notes: false
+          body: |
+            Aplicativo experimental para revisar segmentos extraidos de plantas JPG PNG PDF.
+            DXF editavel mediante revisao humana. Nao gera automaticamente projeto BIM.
+            Executavel Windows Portable, codigo e informacoes de licenca disponiveis.
+            Creditos WMK: Walney Moreira Klein - walneyk@hotmail.com.
+          files: WMK-Architecture-Studio-Windows-Portable.zip
